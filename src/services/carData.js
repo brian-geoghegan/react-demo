@@ -1,6 +1,6 @@
 async function retrieveCarData() {
+    const url = 'http://www.cartrawler.com/ctabe/cars.json';
     try {
-        const url = 'http://www.cartrawler.com/ctabe/cars.json';
         const response = await fetch(
             url, {
             mode: 'cors'

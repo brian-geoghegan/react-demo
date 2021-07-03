@@ -1,5 +1,6 @@
 
-
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 /**
  * Only accepts array of objects [{}]
@@ -9,67 +10,49 @@
  * @param {array} headings is an array of headings.
  * @param {string} sortKey is an sortKey for the table.
  */
-const Legend = (tableData, headings, sortKey) => {
-    const [order, setOrder] = React.useState('Cost');
-    const [orderBy, setOrderBy] = React.useState(sortKey);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-      };
-    
-      const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-      };
-
-    
-    const useStyles = makeStyles({
-        table: {
-          minWidth: 650,
+const Legend = (data) => {    
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+          },
         },
-    });
+      }));      
     
     const classes = useStyles();
 
-    if(!tableData) return <p>No data to display</p>
-
     return (
-        <Paper className={classes.paper}>
-            <TableContainer component={Paper}>
-                <Table 
-                    className={classes.table}
-                    aria-labelledby="tableTitle"
-                    size={'medium'}
-                    aria-label='enhanced table'
-                >
-                    <TableHead>
-                        {createTableHeader(headings)}
-                    </TableHead>
-                    <TableBody>
-                    {
-                        createTableBody(
-                            stableSort(tableData, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        )
-                    }
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[4, 10, 25]}
-                component="div"
-                count={tableData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-        </Paper>
-
-
-)
+        <form className={classes.root} noValidate autoComplete="off">
+            <div>
+                <TextField
+                    id="datetime-local"
+                    label="Pick-up date and time"
+                    type="datetime-local"
+                    defaultValue={data ? data['@PickUpDateTime'] : Date.now().toLocaleString()}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />                
+                <TextField
+                    id="datetime-local"
+                    label="Return date and time"
+                    type="datetime-local"
+                    defaultValue={data ? data['@ReturnDateTime'] : Date.now().toLocaleString()}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />    
+            </div>
+            <div>
+                <TextField id="outlined-basic" label="Pick up location" variant="outlined">{data? data['@PickUpLocation.@Name']: ''}</TextField>
+                <TextField id="outlined-basic" label='Return location' variant="outlined">{data? data['@ReturnLocation.@Name']: ''}</TextField>
+            </div>
+        </form>
+    )
 };
 
 export default Legend;

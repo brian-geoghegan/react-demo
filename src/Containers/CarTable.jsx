@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import CustomTable from '../Components/CustomTable';
 import { connect } from "react-redux";
 import { retrieveCarData } from '../services/carData';
 import { parseCarTableData, mapHeadingsToData } from '../helpers/vehicleHelpers';
+import CustomTable from '../Components/CustomTable';
+import Legend from '../Components/Legend';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+
 
 function CarTable() {
     const [tableData, setTableData] = useState(null);
@@ -30,17 +34,19 @@ function CarTable() {
             const resp = await retrieveCarData();
             if (!resp) throw new Error('Api returned error');
             const carData = resp[0].VehAvailRSCore.VehVendorAvails;
-            const legendData = resp[0].VehAvailRSCore.VehRentalCore;
+            const legendApiData = resp[0].VehAvailRSCore.VehRentalCore;
 
             const parsedTableData = parseCarTableData(carData);
             const dataMappedToHeadings = mapHeadingsToData(parsedTableData, vehicleTableHeadings);
             setTableData(dataMappedToHeadings);
+            setLegendData(legendApiData)
         }
     });
 
     return (
         <div>
-            {CustomTable(tableData, vehicleTableHeadings, sortKey)}
+                    {Legend(legendData)}
+                    {CustomTable(tableData, vehicleTableHeadings, sortKey)}
         </div>
     )
 };
