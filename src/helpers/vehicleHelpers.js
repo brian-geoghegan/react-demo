@@ -82,16 +82,19 @@ const mapHeadingsToData = (parsedTableData, headings) => {
     return finalDisplayData;
 }
 
-const sortByCost = (someData) => {
-    console.log(someData)
-    const sortedData =  _.sortBy(someData,'RateTotalAmount' );
-    console.log(sortedData)
-
+/**
+ * 
+ * @param {*} someData 
+ */
+const sortByPrice = (displayData) => {
+    const sortedData =  displayData.sort((a, b) => 
+        (parseFloat(a.RateTotalAmount) > parseFloat(b.RateTotalAmount)) 
+        ? 1 : -1)
     return sortedData;
 }
 
 export {
     parseCarTableData,
     mapHeadingsToData,
-    sortByCost
+    sortByPrice
 }

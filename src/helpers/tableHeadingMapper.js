@@ -9,7 +9,7 @@ const vehicleTableMapper = new Map();
 vehicleTableMapper.set('Vehicle', 'Name');
 vehicleTableMapper.set('Status', 'Status');
 vehicleTableMapper.set('Image', 'PictureURL');
-vehicleTableMapper.set('Cost', 'RateTotalAmount');
+vehicleTableMapper.set('Price', 'RateTotalAmount');
 vehicleTableMapper.set('Vendor', 'VendorName');
 vehicleTableMapper.set('No of Doors', 'DoorCount');
 vehicleTableMapper.set('Drive Type', 'DriveType');

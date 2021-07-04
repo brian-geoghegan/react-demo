@@ -60,7 +60,8 @@ function descendingComparator(a, b, orderBy) {
   }
   
 /**
- * Stolen from material UI table docs 
+ * Stolen from material UI table docs
+ * As you can see it doesn't work yet!
  */
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -104,10 +105,11 @@ function descendingComparator(a, b, orderBy) {
     );
   }
 /**
- * I'm not even sure if this is good practice
- * A function to creates unstructured tables
+
  * Depending on incoming data this could ne weird.
- * @param {TableItems} data 
+ * @param {Array Objects} rowData data to be displayed 
+ * @param {func} handler callback to container to handle row clicks
+ * @param {styling} classes what type makeStyles returns
  */
 
 const createTableBodyRow = (rowData, handler, classes) => {

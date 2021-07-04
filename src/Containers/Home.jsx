@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { retrieveCarData } from '../services/carData';
-import { parseCarTableData, mapHeadingsToData, sortByCost } from '../helpers/vehicleHelpers';
+import { parseCarTableData, mapHeadingsToData, sortByPrice } from '../helpers/vehicleHelpers';
 import CustomTable from '../Components/CustomTable';
 import Legend from '../Components/Legend';
 import { useHistory } from 'react-router-dom';
@@ -20,7 +20,7 @@ function Home() {
      * In case product owner suddenly changes there mind :/
      */
     const vehicleTableHeadings = [
-        'Cost',
+        'Price',
         'Vehicle',
         'Status',
         'Vendor',
@@ -45,8 +45,8 @@ function Home() {
              * such as not using material ui and just passing up a manually sort here.
              * But I spend alot of time in other places.
              * */ 
-            const sortedData = sortByCost(dataMappedToHeadings);
-            setTableData(dataMappedToHeadings);
+            const sortedData = sortByPrice(dataMappedToHeadings);
+            setTableData(sortedData);
             setAllVehicleData(parsedTableData);
             setLegendData(legendApiData);
         }
