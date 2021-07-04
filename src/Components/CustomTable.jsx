@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 
 /**
  * Stolen from material UI table docs 
+ * Note: Did not get this working
  */
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -74,9 +75,8 @@ function descendingComparator(a, b, orderBy) {
   function EnhancedTableHead(props) {
     const { classes, order, orderBy, numSelected, rowCount, onRequestSort, headings } = props;
     const createSortHandler = (property) => (event) => {
-      onRequestSort(event, property);
-    };
-  
+        onRequestSort(event, property);
+      };
     return (
       <TableHead>
         <TableRow>
@@ -118,7 +118,6 @@ const createTableBodyRow = (rowData, handler, classes) => {
         >
             {
             Object.entries(rowData).map(cellId => {
-                console.log(cellId)
                 if (cellId[0] !== 'uniqueId') {
                 return (
                     <TableCell 

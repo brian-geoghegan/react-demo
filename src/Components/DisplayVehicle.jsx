@@ -21,11 +21,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+/**
+ * Not decoupled as the data is
+ * already tightly coupled to the output page.
+ * If we needed more functionality such as 'book now'
+ * It would be wrapped in a container.
+ */
 const DisplayVehicle = ({ location }) => {
     const history = useHistory();
     const classes = useStyles();
 
-    console.log(location.state[0])
     const {
         VendorName,
         Status,
@@ -48,7 +53,6 @@ const DisplayVehicle = ({ location }) => {
     /**
      * Could map backwards here - keys to table headings
      */
-    const vehicleTableHeadings = Object.keys(location.state[0])
     return (
     <Container>
         <Grid container spacing={6}>

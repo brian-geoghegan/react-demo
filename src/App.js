@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Components/Header';
 import DisplayVehicle from './Components/DisplayVehicle';
-import CarTable from './Containers/CarTable';
-import Container from '@material-ui/core/Container';
+import Home from './Containers/Home';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -18,7 +17,7 @@ function App() {
       <div className='App'> 
         <Header />
         <Switch>
-          <Route exact path='/' component={CarTable} />
+          <Route exact path='/' component={Home} />
           <Route path='/vehicle' component={DisplayVehicle} />
         </Switch>
       </div>

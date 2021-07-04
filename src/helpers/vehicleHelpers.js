@@ -1,7 +1,9 @@
 import { flatten } from 'flat';
+import _ from 'underscore';
 import vehicleTableMapper from './tableHeadingMapper';
 /**
- * Overengineer for the task -> but provides a reusable table componenet and structure in general
+ * Overengineered for the task -> but lets us decouple from
+ * the table component so we could reuse it later.
  * @param {JSONarray} data is the returned data from the carTrawler api.
  * @returns A flattened simplified list for the resuable table component.
  */
@@ -38,8 +40,10 @@ const keySimplifier = (flattenedVehicleData) => {
 
 /**
  * This is the add the vendor information to the vehicle so its easier to flatten.
- * Vendor Key has Code and
- * and create a unqiueId to iterate through efficiently.
+ * Adds vendor key and code as they seem to be the only unique
+ * data when put together, this is done to iterate through the
+ * data more efficiently - unique ids should be be used instead of
+ * indexes.
  * 
  * @param {} vehicle 
  * @param {*} venderData 
@@ -53,9 +57,10 @@ const addUniqueIdAndVendorToVehicle = (vehicle, venderData) => {
 }
 
 /**
- * 
+ * This function takes in the entire table and an array of headings
+ * Basically filters out data
  * @param {*} parsedTableData all table data
- * @param {*} headings 
+ * @param {*} headings headings that will be mapped over
  */
 const mapHeadingsToData = (parsedTableData, headings) => {
     let mappedHeadings = {};
@@ -65,6 +70,7 @@ const mapHeadingsToData = (parsedTableData, headings) => {
         mappedHeadings[mappedHeading] = mappedHeading;
     }
     for(const vehicleData of parsedTableData) {
+        // Set unique id of final data as its separate to headings
         let extractedVehicle = {
             uniqueId: vehicleData.uniqueId
         };
@@ -76,7 +82,16 @@ const mapHeadingsToData = (parsedTableData, headings) => {
     return finalDisplayData;
 }
 
+const sortByCost = (someData) => {
+    console.log(someData)
+    const sortedData =  _.sortBy(someData,'RateTotalAmount' );
+    console.log(sortedData)
+
+    return sortedData;
+}
+
 export {
     parseCarTableData,
-    mapHeadingsToData
+    mapHeadingsToData,
+    sortByCost
 }
