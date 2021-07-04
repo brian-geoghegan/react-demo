@@ -13,6 +13,7 @@ async function retrieveCarData() {
     } catch (error) {
         // To-do: Should fire off an appropriate error handler/error component
         console.log('Error: ', error ? error.message: 'unknown error');
+        alert('Error: ', error ? error.message: 'unknown error');
     }
 
 }

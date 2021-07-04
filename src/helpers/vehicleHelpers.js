@@ -64,10 +64,10 @@ const mapHeadingsToData = (parsedTableData, headings) => {
         const mappedHeading = vehicleTableMapper.get(key);
         mappedHeadings[mappedHeading] = mappedHeading;
     }
-
     for(const vehicleData of parsedTableData) {
-        let extractedVehicle = {};
-        extractedVehicle.uniqueId = vehicleData.uniqueId;
+        let extractedVehicle = {
+            uniqueId: vehicleData.uniqueId
+        };
         for (const [key] of Object.entries(mappedHeadings)) {
             extractedVehicle[key] = vehicleData[key]; 
         }

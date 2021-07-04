@@ -1,17 +1,16 @@
 
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { CardHeader } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
-/**
- * Only accepts array of objects [{}]
- * Each object must have a uniqueId key
- * 
- * @param {array} tableData is an array of objects. 
- * @param {array} headings is an array of headings.
- * @param {string} sortKey is an sortKey for the table.
- */
+const Legend = (data) => {
 
-const Legend = (data) => {    
     const useStyles = makeStyles((theme) => ({
         root: {
           '& .MuiTextField-root': {
@@ -19,38 +18,88 @@ const Legend = (data) => {
             width: '25ch',
           },
         },
+        cardroot: {
+            minWidth: 275,
+            marginTop: 50,
+            backgroundColor: '#d3d3d3'
+        },
+        textField: {
+            backgroundColor: '#fff'
+        },
+        title: {
+            fontSize: 14,
+        },
+        bullet: {
+            display: 'inline-block',
+            margin: '0 2px',
+            transform: 'scale(0.8)',
+          },
+          title: {
+            fontSize: 14,
+          },
+          pos: {
+            marginBottom: 12,
+          },
+        
       }));      
     
     const classes = useStyles();
-
     return (
         <form className={classes.root} noValidate autoComplete="off">
+            <Card className={classes.cardroot} variant="outlined">
+                <CardHeader>
+                    Pick your date and time
+                </CardHeader>
+            <CardContent>
+                
+            {data ? 
+            <div>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        Pick your date and time
+                </Typography>
             <div>
                 <TextField
-                    id="datetime-local"
+                    id="pick-up-date"
                     label="Pick-up date and time"
                     type="datetime-local"
-                    defaultValue={data ? data['@PickUpDateTime'] : Date.now().toLocaleString()}
+                    defaultValue={data['@PickUpDateTime'].substring(0, data['@PickUpDateTime'].length - 4)}
                     className={classes.textField}
                     InputLabelProps={{
                         shrink: true,
                     }}
-                />                
+                />
                 <TextField
-                    id="datetime-local"
+                    id="return-date"
                     label="Return date and time"
                     type="datetime-local"
-                    defaultValue={data ? data['@ReturnDateTime'] : Date.now().toLocaleString()}
                     className={classes.textField}
+                    defaultValue={data['@ReturnDateTime'].substring(0, data['@PickUpDateTime'].length - 4)}
                     InputLabelProps={{
                         shrink: true,
                     }}
                 />    
             </div>
             <div>
-                <TextField id="outlined-basic" label="Pick up location" variant="outlined">{data? data['@PickUpLocation.@Name']: ''}</TextField>
-                <TextField id="outlined-basic" label='Return location' variant="outlined">{data? data['@ReturnLocation.@Name']: ''}</TextField>
+                <TextField 
+                    id="outlined-basic" 
+                    label="Pick up location"
+                    className={classes.textField}
+                    variant="outlined"
+                    defaultValue={data.PickUpLocation['@Name']}
+                />
+                <TextField 
+                    id="outlined-basic" 
+                    label='Return location'
+                    className={classes.textField}
+                    variant="outlined"
+                    defaultValue={data.ReturnLocation['@Name']}
+                />
             </div>
+            <Button variant="contained" color="primary" onClick={() => alert(`I don't do anything yet`)}>Search</Button>
+            </div>
+            : <LinearProgress />}
+            </CardContent>
+            </Card>
         </form>
     )
 };

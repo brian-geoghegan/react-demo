@@ -1,17 +1,43 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-
+/**
+ * Support for variable image keyNames
+ */
 const pictureOptions = ['PictureURL', 'Image', 'Picture']
+
+const useStyles = makeStyles({
+    table: {
+      minWidth: 650,
+    },
+    visuallyHidden: {
+        border: 0,
+        clip: 'rect(0 0 0 0)',
+        height: 1,
+        margin: -1,
+        overflow: 'hidden',
+        padding: 0,
+        position: 'absolute',
+        top: 20,
+        width: 1,
+      },
+      tableRow: {
+          "&:hover": {
+              backgroundColor: '#eee',
+              cursor:'pointer'
+          }
+      }
+});
 
 /**
  * Stolen from material UI table docs 
@@ -32,6 +58,9 @@ function descendingComparator(a, b, orderBy) {
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
   
+/**
+ * Stolen from material UI table docs 
+ */
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -42,6 +71,38 @@ function descendingComparator(a, b, orderBy) {
     return stabilizedThis.map((el) => el[0]);
   }
 
+  function EnhancedTableHead(props) {
+    const { classes, order, orderBy, numSelected, rowCount, onRequestSort, headings } = props;
+    const createSortHandler = (property) => (event) => {
+      onRequestSort(event, property);
+    };
+  
+    return (
+      <TableHead>
+        <TableRow>
+          {headings.map((headCell) => (
+            <TableCell
+              key={headCell}
+              sortDirection={orderBy === headCell ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === headCell}
+                direction={orderBy === headCell ? order : 'asc'}
+                onClick={createSortHandler(headCell)}
+              >
+                {headCell}
+                {orderBy === headCell ? (
+                  <span className={classes.visuallyHidden}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    );
+  }
 /**
  * I'm not even sure if this is good practice
  * A function to creates unstructured tables
@@ -49,36 +110,38 @@ function descendingComparator(a, b, orderBy) {
  * @param {TableItems} data 
  */
 
-const createTableBodyRow = (rowData) => {
-    const uniqueId = rowData.uniqueId;
-    delete rowData.uniqueId;
-    console.log(rowData)
+const createTableBodyRow = (rowData, handler, classes) => {
     return (
-        <TableRow key={uniqueId}>
+        <TableRow 
+            key={rowData.uniqueId}
+            className={classes.tableRow}
+        >
             {
-            Object.entries(rowData).map(cellId => 
-                <TableCell component='th' scope='row'>
-                    {pictureOptions.includes(cellId[0])
-                        ? <img src={cellId[1]} alt={cellId} height="80"/> 
-                        : cellId[1]
-                    }
-                </TableCell>)
+            Object.entries(rowData).map(cellId => {
+                console.log(cellId)
+                if (cellId[0] !== 'uniqueId') {
+                return (
+                    <TableCell 
+                        onClick={handler ? () => handler(rowData.uniqueId) : null} 
+                        component='th'
+                        scope='row'
+                    >
+                        {
+                            pictureOptions.includes(cellId[0])
+                              ? <img src={cellId[1]} alt={cellId} height="80"/> 
+                              : cellId[1]
+                        }
+                    </TableCell>
+                    )
+                } else return null})
             }
         </TableRow>
     )
 };
 
-const createTableBody = (tableData) => {
-     return tableData.map(rowData => createTableBodyRow(rowData)) 
+const createTableBody = (tableData, handler, classes) => {
+     return tableData.map(rowData => createTableBodyRow(rowData, handler, classes)) 
 };
-
-const createTableHeader = (headings) => {
-    return(
-        <TableRow>
-            {headings.map(heading =><TableCell>{heading}</TableCell>)}
-        </TableRow>
-    )
-}
 
 /**
  * Only accepts array of objects [{}]
@@ -88,8 +151,8 @@ const createTableHeader = (headings) => {
  * @param {array} headings is an array of headings.
  * @param {string} sortKey is an sortKey for the table.
  */
-const CustomTable = (tableData, headings, sortKey) => {
-    const [order, setOrder] = React.useState('Cost');
+const CustomTable = (tableData, headings, sortKey, handler) => {
+    const [order, setOrder] = React.useState('dsc');
     const [orderBy, setOrderBy] = React.useState(sortKey);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(4);
@@ -103,16 +166,15 @@ const CustomTable = (tableData, headings, sortKey) => {
         setPage(0);
       };
 
-    
-    const useStyles = makeStyles({
-        table: {
-          minWidth: 650,
-        },
-    });
-    
+    const handleRequestSort = (event, property) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
+
     const classes = useStyles();
 
-    if(!tableData) return <p>No data to display</p>
+    if(!tableData) return <LinearProgress />
 
     return (
         <Paper className={classes.paper}>
@@ -123,14 +185,21 @@ const CustomTable = (tableData, headings, sortKey) => {
                     size={'medium'}
                     aria-label='enhanced table'
                 >
-                    <TableHead>
-                        {createTableHeader(headings)}
-                    </TableHead>
+                    <EnhancedTableHead
+                        headings={headings}
+                        classes={classes}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={handleRequestSort}
+                        rowCount={tableData.length}
+                    />
                     <TableBody>
                     {
                         createTableBody(
                             stableSort(tableData, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+                            handler,
+                            classes
                         )
                     }
                     </TableBody>

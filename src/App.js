@@ -1,32 +1,28 @@
-import { ReactRouter } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Header from './Components/Header';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import DisplayVehicle from './Components/DisplayVehicle';
 import CarTable from './Containers/CarTable';
-import logo from './logo.svg';
+import Container from '@material-ui/core/Container';
 import './App.css';
-
-const countReducer = function (state = 0, action) {
-  switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
-    default:
-      return state;
-  }
-};
-
-let store = createStore(countReducer);
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams
+} from 'react-router-dom';
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
+    <Router>
+      <div className='App'> 
         <Header />
-        <CarTable />
+        <Switch>
+          <Route exact path='/' component={CarTable} />
+          <Route path='/vehicle' component={DisplayVehicle} />
+        </Switch>
       </div>
-    </Provider>
+    </Router>
   );
 }
 
