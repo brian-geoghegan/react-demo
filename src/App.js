@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Header from './Components/Header';
 import DisplayVehicle from './Components/DisplayVehicle';
 import Home from './Containers/Home';
+//App.css useful remnant from create-react-app
 import './App.css';
 import {
   BrowserRouter as Router,

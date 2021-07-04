@@ -76,6 +76,7 @@ function descendingComparator(a, b, orderBy) {
   function EnhancedTableHead(props) {
     const { classes, order, orderBy, numSelected, rowCount, onRequestSort, headings } = props;
     const createSortHandler = (property) => (event) => {
+        alert('He never finished my sorting ability');
         onRequestSort(event, property);
       };
     return (

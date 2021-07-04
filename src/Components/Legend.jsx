@@ -9,8 +9,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { CardHeader } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
+/**
+ * Tightly coupled - put too much time into table component
+ */
 const Legend = (data) => {
-
     const useStyles = makeStyles((theme) => ({
         root: {
           '& .MuiTextField-root': {
@@ -21,7 +23,8 @@ const Legend = (data) => {
         cardroot: {
             minWidth: 275,
             marginTop: 50,
-            backgroundColor: '#d3d3d3'
+            color: '#000000',
+            backgroundColor: '#e3e3e3'
         },
         textField: {
             backgroundColor: '#fff'
@@ -29,14 +32,6 @@ const Legend = (data) => {
         title: {
             fontSize: 14,
         },
-        bullet: {
-            display: 'inline-block',
-            margin: '0 2px',
-            transform: 'scale(0.8)',
-          },
-          title: {
-            fontSize: 14,
-          },
           pos: {
             marginBottom: 12,
           },
@@ -55,7 +50,7 @@ const Legend = (data) => {
             {data ? 
             <div>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        Pick your date and time
+                    Pick your date and time
                 </Typography>
             <div>
                 <TextField

@@ -81,14 +81,14 @@ const DisplayVehicle = ({ location }) => {
                 <Button
                     variant="contained" 
                     color="secondary" 
-                    onClick={() => alert('I do not work!')}
+                    onClick={() => alert('I have no purpose')}
                     >
                         Select
                 </Button>
             </Grid>
             <Grid item xs={6}>
-
                 <img className={classes.imagecontainer} src={PictureURL} />
+                <p>Don't mind my styling as a page I didn't get my deserved time</p>
             </Grid>
         </Grid>
     </Container>

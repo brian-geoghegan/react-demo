@@ -1,5 +1,5 @@
 async function retrieveCarData() {
-    const url = 'http://www.cartrawler.com/ctabe/cars.json';
+    const url = ' https://cors-everywhere.herokuapp.com/http://www.cartrawler.com/ctabe/cars.json';
     try {
         const response = await fetch(
             url, {
