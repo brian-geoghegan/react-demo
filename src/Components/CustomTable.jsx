@@ -131,24 +131,24 @@ const createTableBodyRow = (rowData, handler, classes) => (
     className={classes.tableRow}
   >
     {
-            Object.entries(rowData).map((cellId) => {
-              if (cellId[0] !== 'uniqueId') {
-                return (
-                  <TableCell
-                    onClick={handler ? () => handler(rowData.uniqueId) : null}
-                    component="th"
-                    scope="row"
-                  >
-                    {
-                            pictureOptions.includes(cellId[0])
-                              ? <img src={cellId[1]} alt={cellId} height="80" />
-                              : cellId[1]
-                        }
-                  </TableCell>
-                );
-              } return null;
-            })
-            }
+    Object.entries(rowData).map((cellId) => {
+      if (cellId[0] !== 'uniqueId') {
+        return (
+          <TableCell
+            onClick={handler ? () => handler(rowData.uniqueId) : null}
+            component="th"
+            scope="row"
+          >
+            {
+                    pictureOptions.includes(cellId[0])
+                      ? <img src={cellId[1]} alt={cellId} height="80" />
+                      : cellId[1]
+                }
+          </TableCell>
+        );
+      } return null;
+    })
+  }
   </TableRow>
 );
 
@@ -207,13 +207,13 @@ const CustomTable = (tableData, headings, sortKey, handler) => {
           />
           <TableBody>
             {
-                        createTableBody(
-                          stableSort(tableData, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-                          handler,
-                          classes,
-                        )
-                    }
+              createTableBody(
+                stableSort(tableData, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+                handler,
+                classes,
+              )
+            }
           </TableBody>
         </Table>
       </TableContainer>
