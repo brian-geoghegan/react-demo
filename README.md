@@ -16,7 +16,9 @@ As soon as I merge to github master branch AWS picks it up and deploys
 
 5. Improvements I would go for with more time
 
-Use next js - use SSR or so if the api response is always going to be static. This would remove the loading you can see at the start, also with next you get router for free no coding needed.
+Make the site more reactive - the table doesn't reponse to changes in size that well - likewise page 2 is just ugly
+
+Use next js - use SSR or so if the api response is always going to be static. This would remove the loading you can see at the start, also with next you get router for free no coding needed. Could use react-snapshot here too
 
 Redux, Context or caching service to store data between route changes
 

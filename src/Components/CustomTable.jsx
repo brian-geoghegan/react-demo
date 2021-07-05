@@ -18,7 +18,6 @@ const pictureOptions = ['PictureURL', 'Image', 'Picture']
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 650,
     },
     visuallyHidden: {
         border: 0,
