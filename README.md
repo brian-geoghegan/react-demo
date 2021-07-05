@@ -4,6 +4,8 @@ Main work went into keeping the table reusable
 
 Things to note: 
 
+PropTypes entered to pass linter, normally - they'd be correct.
+
 1. You can modify the carTable container headings array to change what is displayed in the table
 
 2. The CustomTable component is reusable but unfinished, if you hover over the headers in the table they appear to be clickable/sortable - I didn't get this done in time so I left it there to show the attempt - but instead manually sorted the price from the container level from cheap -> expensive
@@ -12,7 +14,7 @@ Things to note:
 via aws amplify and a ci/cd pipeline is setup
 As soon as I merge to github master branch AWS picks it up and deploys
 
-4. Example of the api response vs the cleaned version is in exampleData - i'm sure this could been done better to be honest
+4. Example of the api response vs the cleaned version is in exampleData - i'm sure this could been done better to be honest. 
 
 5. Improvements I would go for with more time
 
@@ -31,8 +33,6 @@ Error handler component - to display errors nicer
 logger - need to keep an eye on logs
 
 Legend and DisplayVehicle more generic - at the moment they're tightly coupled to the data
-
-propTypes - gives some typing to passing data without the need for a full typescript bang. 
 
 Create react app comes with babel and weppack behind the scenes, would look into that more as this cause issues when youi need to interact with them.
 
