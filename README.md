@@ -22,7 +22,7 @@ Use next js - use SSR or so if the api response is always going to be static. Th
 
 Redux, Context or caching service to store data between route changes
 
-Linter - should have done this earlier - git push failure when lint fails.
+Linter - should have done this earlier - git push failure when lint fails. Edit - This is done -> shoulda definitely done it earlier
 
 unit testing - normally 90% min unit testing and use git pre-commit to fail git pushes
 
