@@ -1,3 +1,43 @@
+# What is this?
+I created a static react app as per the cartrawler requirements
+Main work went into keeping the table reusable
+
+Things to note: 
+
+1. You can modify the carTable container headings array to change what is displayed in the table
+
+2. The CustomTable component is reusable but unfinished, if you hover over the headers in the table they appear to be clickable/sortable - I didn't get this done in time so I left it there to show the attempt - but instead manually sorted the price from the container level from cheap -> expensive
+
+3. the app is deployed here: https://master.d1khmn5cgxzqxt.amplifyapp.com/
+via aws amplify and a ci/cd pipeline is setup
+As soon as I merge to github master branch AWS picks it up and deploys
+
+4. Example of the api response vs the cleaned version is in exampleData - i'm sure this could been done better to be honest
+
+5. Improvements I would go for with more time
+
+Use next js - use SSR or so if the api response is always going to be static. This would remove the loading you can see at the start, also with next you get router for free no coding needed.
+
+Redux, Context or caching service to store data between route changes
+
+Linter - should have done this earlier - git push failure when lint fails.
+
+unit testing - normally 90% min unit testing and use git pre-commit to fail git pushes
+
+Error handler component - to display errors nicer
+
+logger - need to keep an eye on logs
+
+Legend and DisplayVehicle more generic - at the moment they're tightly coupled to the data
+
+propTypes - gives some typing to passing data without the need for a full typescript bang. 
+
+Create react app comes with babel and weppack behind the scenes, would look into that more as this cause issues when youi need to interact with them.
+
+
+
+# Leaving these below for easy access
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
