@@ -45,8 +45,8 @@ const Legend = (data) => {
   const pickUpTime = data['@PickUpDateTime'].substring(0, data['@PickUpDateTime'].length - 4);
   const returnTime = data['@ReturnDateTime'].substring(0, data['@PickUpDateTime'].length - 4);
 
-  const pickUpLocation = data['@ReturnDateTime'].substring(0, data['@PickUpDateTime'].length - 4);
-  const returnLocation = data['@ReturnDateTime'].substring(0, data['@PickUpDateTime'].length - 4);
+  const pickUpLocation = data.PickUpLocation['@Name'];
+  const returnLocation = data.ReturnLocation['@Name'];
   /* eslint-enable react/destructuring-assignment */
 
   return (
